@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mccitw</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #282c34;
+      color: white;
+      transition: background-color 0.5s ease;
+    }
+    #clock {
+      font-size: 3em;
+      margin-bottom: 20px;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    select, input {
+      padding: 10px;
+      font-size: 1em;
+      margin: 10px;
+    }
+    a {
+      color: #61dafb;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">Loading time...</div>
+  <label for="timezone-select">Select Timezone:</label>
+  <select id="timezone-select">
+    <option value="Asia/Tbilisi">Batumi (Asia/Tbilisi)</option>
+    <option value="UTC">UTC</option>
+    <option value="America/New_York">New York (America/New_York)</option>
+    <option value="Europe/London">London (Europe/London)</option>
+    <option value="Asia/Tokyo">Tokyo (Asia/Tokyo)</option>
+    <!-- Add more timezones as needed -->
+  </select>
+
+  <label for="color-picker">Select Background Color:</label>
+  <input type="color" id="color-picker" value="#282c34">
+
+  <label for="clock-effect">Clock Effect:</label>
+  <select id="clock-effect">
+    <option value="none">None</option>
+    <option value="scale">Scale</option>
+    <option value="fade">Fade</option>
+  </select>
+
+  <a href="https://x.com/zxddmusic" target="_blank">my twitter </a>
+  <a href="https://soundcloud.com/zxdd" target="_blank">my music</a>
+  <script>
+    function updateClock() {
+      const clockElement = document.getElementById('clock');
+      const timezoneSelect = document.getElementById('timezone-select');
+      const selectedTimezone = timezoneSelect.value;
+      const options = { timeZone: selectedTimezone, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      const timeString = new Intl.DateTimeFormat([], options).format(new Date());
+      clockElement.textContent = timeString;
+
+      const effect = document.getElementById('clock-effect').value;
+      if (effect === 'scale') {
+        clockElement.style.transform = 'scale(1.2)';
+        clockElement.style.opacity = '1';
+      } else if (effect === 'fade') {
+        clockElement.style.transform = 'scale(1)';
+        clockElement.style.opacity = '0.5';
+      } else {
+        clockElement.style.transform = 'scale(1)';
+        clockElement.style.opacity = '1';
+      }
+    }
+
+    document.getElementById('timezone-select').addEventListener('change', updateClock);
+    document.getElementById('color-picker').addEventListener('input', function() {
+      document.body.style.backgroundColor = this.value;
+    });
+    document.getElementById('clock-effect').addEventListener('change', updateClock);
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
